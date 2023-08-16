@@ -31,9 +31,9 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 996;
-  background: #e43c5c;
-  width: 40px;
-  height: 40px;
+  background: #25D366;
+  width: 50px;
+  height: 50px;
   border-radius: 50px;
   transition: all 0.4s;
 }
@@ -45,7 +45,7 @@ h6 {
 }
 
 .back-to-top:hover {
-  background: #e9607a;
+  background: #128C7E;
   color: #fff;
 }
 
@@ -677,7 +677,7 @@ section {
 # Cta
 --------------------------------------------------------------*/
 .cta {
-  background: linear-gradient(rgba(2, 2, 2, 0.5), rgba(0, 0, 0, 0.8)), url("../img/cta-bg.jpg") center center;
+  background: linear-gradient(rgba(2, 2, 2, 0.5), rgba(0, 0, 0, 0.8)), url("../img/meeting.jpg") center center;
   background-size: cover;
   padding: 60px 0;
 }
