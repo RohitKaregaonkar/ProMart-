@@ -1,41 +1,70 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+    $conn = mysqli_connect("localhost", "root", "", "basedb");
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+    if($conn === false){
+        die("ERROR: Could not connect. "
+            . mysqli_connect_error());
+    }
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+    $name = $_REQUEST['name'];
+    $mobile = $_REQUEST['mobile'];
+    $email = $_REQUEST['email'];
+    $msg = $_REQUEST['message'];
+    $dt = date('Y-m-d h:i:s');
+    $id = 0000;
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+    $sql = "INSERT INTO feedback (id, fullname, mobile, email, message, time) VALUES ('$id', '$name', '$mobile', '$email', '$msg', '$dt')";
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+    $successDiv = <<<HTML
+<div class="alert alert-success">
+  <strong>Success!</strong> Your data has been stored successfully.
+</div>
+HTML;
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
 
-  echo $contact->send();
+    if(mysqli_query($conn, $sql)) {
+       echo $successDiv;
+      //  echo "<script>window.location='../index.html';</script>";
+         
+    } else {
+        echo "ERROR: Hush! Sorry. " . mysqli_error($conn);
+    }
+
+    // if(mysqli_query($conn, $sql)) {
+    //     // If the query is successful, show the success message and hide loading and error messages
+    //     echo "<script>window.location='../index.html';</script>";
+    //     echo "<script>
+    //             document.querySelector('.sent-message').style.display = 'block';
+    //         </script>";
+    // } else {
+    //     // If there's an error, show the error message and hide loading and success messages
+    //     echo "<script>
+    //             document.querySelector('.loading').style.display = 'none';
+    //             document.querySelector('.sent-message').style.display = 'none';
+    //             document.querySelector('.error-message').innerHTML = 'Error: " . mysqli_error($conn) . "';
+    //             document.querySelector('.error-message').style.display = 'block';
+    //         </script>";
+    // }
+
+    mysqli_close($conn);
 ?>
+
+
+
+<!-- 
+
+// Create a success message div
+$successDiv = <<<HTML
+<div class="alert alert-success">
+  <strong>Success!</strong> Your data has been stored successfully.
+</div>
+HTML;
+
+// Check if the data was stored successfully
+if ($dataWasStoredSuccessfully) {
+  // Show the success message
+  echo $successDiv;
+}
+
+
+ -->
